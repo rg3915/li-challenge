@@ -19,6 +19,20 @@ class TestUnit(unittest.TestCase):
         ]
         self.assertEqual(expected, self.matrix.as_list)
 
+    def test_clean(self):
+        """
+        C
+        Limpa a matriz. O tamanho permanece o mesmo. Todos os pixels ficam
+        brancos (O).
+        """
+        self.matrix.create(2, 3, 'X')
+        self.matrix.clean()
+        expected = [
+            ['O', 'O', 'O'],
+            ['O', 'O', 'O'],
+        ]
+        self.assertEqual(expected, self.matrix.as_list)
+
 
 class Matrix(object):
 
@@ -32,11 +46,16 @@ class Matrix(object):
         default_value = default_value or self.DEFAULT_VALUE
         self.as_list = [[default_value] * cols for i in range(rows)]
 
+    def clean(self):
+        for row_index, row in enumerate(self.as_list):
+            for col_index, col in enumerate(row):
+                self.as_list[row_index][col_index] = self.DEFAULT_VALUE
+
 
 def main():
     pass
 
 
 if __name__ == '__main__':
-    matrix = Matrix()
+    unittest.main()
     main()
