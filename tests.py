@@ -79,6 +79,18 @@ class TestIntegration(unittest.TestCase):
         self.assertEqual(1, mock_create.call_count)
         self.assertEqual(call('2', '3'), mock_create.call_args)
 
+    @patch('editor_grafico.input')
+    @patch('editor_grafico.Matrix.create')
+    def test_non_command(self, mock_create, mock_input):
+        """
+        Testar se um comando “aleatório” não cria matrix alguma
+        """
+        mock_input.side_effect = ('W 42', 'X')
+        matrix = Matrix()
+        matrix.app()
+        self.assertFalse(mock_create.called)
+        self.assertFalse(matrix.as_list)
+
 
 if __name__ == '__main__':
     unittest.main()
