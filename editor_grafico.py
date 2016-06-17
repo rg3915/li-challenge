@@ -32,6 +32,15 @@ class Matrix(object):
             index = col - 1
             self.as_list[line - 1][index] = color
 
+    def draw_rectangle(self, x1, y1, x2, y2, color):
+        for line in range(x1, x2 + 1):
+            index_line = line - 1
+            for col in range(y1, y2 + 1):
+                index_col = col - 1
+                if index_line not in [x1, x2] or index_col not in [y1, y2]:
+                    self.as_list[index_line][index_col] = color
+        print(as_list)
+
     def app(self):
 
         command_map = {
@@ -58,6 +67,7 @@ class Matrix(object):
                     selected_command['method'](*args)
                 else:
                     print(selected_command['error_message'])
+
 
 if __name__ == '__main__':
     matrix = Matrix()
