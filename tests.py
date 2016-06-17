@@ -62,6 +62,20 @@ class TestUnit(unittest.TestCase):
         ]
         self.assertEqual(expected, self.matrix.as_list)
 
+    def test_colorize_horizontal_interval(self):
+        '''
+        H X1 X2 Y C
+        Desenha um segmento horizontal na linha Y nas colunas de X1 a X2
+        (intervalo inclusivo) na cor C.
+        '''
+        self.matrix.create(2, 3)
+        self.matrix.colorize_horizontal_interval(2, 1, 3, 'C')
+        expected = [
+            ['O', 'O', 'O'],
+            ['C', 'C', 'C'],
+        ]
+        self.assertEqual(expected, self.matrix.as_list)
+
 
 class TestIntegration(unittest.TestCase):
 

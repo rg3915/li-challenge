@@ -27,6 +27,11 @@ class Matrix(object):
             index = line - 1
             self.as_list[index][col - 1] = color
 
+    def colorize_horizontal_interval(self, line, col_start, col_end, color):
+        for col in range(col_start, col_end + 1):
+            index = col - 1
+            self.as_list[line - 1][index] = color
+
     def app(self):
 
         command_map = {
