@@ -1,6 +1,4 @@
 # !/usr/bin/python
-
-
 class Matrix(object):
 
     DEFAULT_VALUE = 'O'
@@ -8,7 +6,7 @@ class Matrix(object):
     def __init__(self):
         self.as_list = list()
 
-    def create(self, rows, cols, default_value=None):
+    def create(self, cols, rows, default_value=None):
         rows, cols = int(rows), int(cols)
         default_value = default_value or self.DEFAULT_VALUE
         self.as_list = [[default_value] * cols for i in range(rows)]
@@ -19,27 +17,36 @@ class Matrix(object):
                 self.as_list[row_index][col_index] = self.DEFAULT_VALUE
 
     def colorize_pixel(self, row, col, color):
-        col, row = col - 1, row - 1
-        self.as_list[row][col] = color
+        col, row = int(col) - 1, int(row) - 1
+        self.as_list[col][row] = color
 
     def colorize_vertical_interval(self, col, line_start, line_end, color):
-        for line in range(line_start, line_end + 1):
-            index = line - 1
-            self.as_list[index][col - 1] = color
+        for line in range(int(line_start), int(line_end) + 1):
+            index = int(line) - 1
+            self.as_list[index][int(col) - 1] = color
 
-    def colorize_horizontal_interval(self, line, col_start, col_end, color):
-        for col in range(col_start, col_end + 1):
-            index = col - 1
-            self.as_list[line - 1][index] = color
+    def colorize_horizontal_interval(self, col_start, col_end, line, color):
+        for col in range(int(col_start), int(col_end) + 1):
+            index = int(col) - 1
+            self.as_list[int(line) - 1][index] = color
 
     def draw_rectangle(self, x1, y1, x2, y2, color):
-        for line in range(x1, x2 + 1):
-            index_line = line - 1
-            for col in range(y1, y2 + 1):
-                index_col = col - 1
-                if index_line not in [x1, x2] or index_col not in [y1, y2]:
-                    self.as_list[index_line][index_col] = color
-        print(as_list)
+        self.colorize_horizontal_interval(y1, y2, x1, color)
+        self.colorize_horizontal_interval(y1, y2, x2, color)
+        self.colorize_vertical_interval(y1, x1, x2, color)
+        self.colorize_vertical_interval(y2, x1, x2, color)
+
+    def colorize_region(self):
+        pass
+
+    @property
+    def as_string(self):
+        list_of_strings = [' '.join(c for c in line) for line in self.as_list]
+        return '\n'.join(list_of_strings)
+
+    def save(self, name):
+        with open(name, 'w') as f:
+            print(self.as_string, file=f)
 
     def app(self):
 
@@ -49,7 +56,42 @@ class Matrix(object):
                 'args_min': 2,
                 'args_max': 3,
                 'error_message': 'Digite pelo menos dois números'
-            }
+            },
+            'C': {
+                'method': self.clean,
+                'args_min': 0,
+                'args_max': 0,
+            },
+            'L': {
+                'method': self.colorize_pixel,
+                'args_min': 2,
+                'args_max': 3,
+                'error_message': 'Digite pelo menos dois números'
+            },
+            'V': {
+                'method': self.colorize_vertical_interval,
+                'args_min': 3,
+                'args_max': 4,
+                'error_message': 'Digite pelo menos três números'
+            },
+            'H': {
+                'method': self.colorize_horizontal_interval,
+                'args_min': 3,
+                'args_max': 4,
+                'error_message': 'Digite pelo menos três números'
+            },
+            'K': {
+                'method': self.draw_rectangle,
+                'args_min': 4,
+                'args_max': 5,
+                'error_message': 'Digite pelo menos quatro números'
+            },
+            'S': {
+                'method': self.save,
+                'args_min': 1,
+                'args_max': 1,
+                'error_message': 'Digite o nome do arquivo'
+            },
         }
 
         while True:
