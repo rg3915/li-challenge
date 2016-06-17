@@ -33,6 +33,19 @@ class TestUnit(unittest.TestCase):
         ]
         self.assertEqual(expected, self.matrix.as_list)
 
+    def test_colorize_pixel(self):
+        """
+        L X Y C
+        Colore um pixel de coordenadas (X,Y) na cor C.
+        """
+        self.matrix.create(2, 3)
+        self.matrix.colorize_pixel(1, 2, 'C')
+        expected = [
+            ['O', 'C', 'O'],
+            ['O', 'O', 'O'],
+        ]
+        self.assertEqual(expected, self.matrix.as_list)
+
 
 class Matrix(object):
 
@@ -50,6 +63,10 @@ class Matrix(object):
         for row_index, row in enumerate(self.as_list):
             for col_index, col in enumerate(row):
                 self.as_list[row_index][col_index] = self.DEFAULT_VALUE
+
+    def colorize_pixel(self, row, col, color):
+        col, row = col - 1, row - 1
+        self.as_list[row][col] = color
 
 
 def main():
