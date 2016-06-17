@@ -91,6 +91,20 @@ class TestIntegration(unittest.TestCase):
         self.assertFalse(mock_create.called)
         self.assertFalse(matrix.as_list)
 
+    @patch('editor_grafico.input')
+    @patch('editor_grafico.Matrix.create')
+    @patch('editor_grafico.print')
+    def test_incomplete_command(self, mock_print, mock_create, mock_input):
+        """
+        Testar se um comando está incompleto
+        """
+        mock_input.side_effect = ('I 42', 'X')
+        matrix = Matrix()
+        matrix.app()
+        self.assertFalse(mock_create.called)
+        self.assertFalse(matrix.as_list)
+        self.assertTrue(mock_print.called)
+
 
 if __name__ == '__main__':
     unittest.main()
