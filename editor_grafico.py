@@ -27,10 +27,33 @@ class Matrix(object):
             index = line - 1
             self.as_list[index][col - 1] = color
 
+    def app(self):
 
-def main():
-    pass
+        command_map = {
+            'I': {
+                'method': self.create,
+                'args_min': 2,
+                'args_max': 3,
+                'error_message': 'Digite pelo menos dois números'
+            }
+        }
 
+        while True:
+            user_input = input('$ ')
+
+            if user_input == 'X':
+                break
+
+            command_input, *args = user_input.split(' ')
+            selected_command = command_map.get(command_input)
+            if selected_command:
+                cond1 = len(args) >= selected_command['args_min']
+                cond2 = len(args) <= selected_command['args_max']
+                if cond1 and cond2:
+                    selected_command['method'](*args)
+                else:
+                    print(selected_command['error_message'])
 
 if __name__ == '__main__':
-    main()
+    matrix = Matrix()
+    matrix.app()

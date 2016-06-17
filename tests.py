@@ -1,5 +1,6 @@
 # !/usr/bin/python
 import unittest
+from unittest.mock import call, patch
 from editor_grafico import Matrix
 
 
@@ -60,6 +61,23 @@ class TestUnit(unittest.TestCase):
             ['O', 'C', 'O'],
         ]
         self.assertEqual(expected, self.matrix.as_list)
+
+
+class TestIntegration(unittest.TestCase):
+
+    @patch('editor_grafico.input')
+    @patch('editor_grafico.Matrix.create')
+    def test_creation(self, mock_create, mock_input):
+        """
+        I M N
+        Cria uma nova matriz MxN. Todos os pixels são brancos (O).
+        """
+        mock_input.side_effect = ('I 2 3', 'X')
+        matrix = Matrix()
+        matrix.app()
+        self.assertTrue(mock_create.called)
+        self.assertEqual(1, mock_create.call_count)
+        self.assertEqual(call('2', '3'), mock_create.call_args)
 
 
 if __name__ == '__main__':
