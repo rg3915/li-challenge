@@ -85,7 +85,7 @@ class TestUnit(unittest.TestCase):
         ]
         self.assertEqual(expected, self.matrix.as_list)
 
-    def test_draw_rectangle(self):
+    def test_draw_rectangle44(self):
         '''
         K X1 Y1 X2 Y2 C
         Desenha um retangulo de cor C. (X1,Y1) é o canto superior esquerdo
@@ -98,6 +98,24 @@ class TestUnit(unittest.TestCase):
             ['C', 'O', 'O', 'C'],
             ['C', 'O', 'O', 'C'],
             ['C', 'C', 'C', 'C'],
+        ]
+        self.assertEqual(expected, self.matrix.as_list)
+
+    def test_draw_rectangle55(self):
+        '''
+        K X1 Y1 X2 Y2 C
+        Desenha um retangulo de cor C. (X1,Y1) é o canto superior esquerdo
+        e (X2,Y2) o canto inferior direito.
+        '''
+        self.matrix.create(5, 6)
+        self.matrix.draw_rectangle(2, 3, 4, 4, 'C')
+        expected = [
+            ['O', 'O', 'O', 'O', 'O'],
+            ['O', 'O', 'O', 'O', 'O'],
+            ['O', 'C', 'C', 'C', 'O'],
+            ['O', 'C', 'C', 'C', 'O'],
+            ['O', 'O', 'O', 'O', 'O'],
+            ['O', 'O', 'O', 'O', 'O'],
         ]
         self.assertEqual(expected, self.matrix.as_list)
 

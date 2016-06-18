@@ -20,21 +20,21 @@ class Matrix(object):
         col, row = int(col) - 1, int(row) - 1
         self.as_list[col][row] = color
 
-    def colorize_vertical_interval(self, col, line_start, line_end, color):
-        for line in range(int(line_start), int(line_end) + 1):
-            index = int(line) - 1
-            self.as_list[index][int(col) - 1] = color
+    def colorize_vertical_interval(self, x, y1, y2, color):
+        for y in range(int(y1), int(y2) + 1):
+            index = int(y) - 1
+            self.as_list[index][int(x) - 1] = color
 
-    def colorize_horizontal_interval(self, col_start, col_end, line, color):
-        for col in range(int(col_start), int(col_end) + 1):
-            index = int(col) - 1
-            self.as_list[int(line) - 1][index] = color
+    def colorize_horizontal_interval(self, x1, x2, y, color):
+        for x in range(int(x1), int(x2) + 1):
+            index = int(x) - 1
+            self.as_list[int(y) - 1][index] = color
 
     def draw_rectangle(self, x1, y1, x2, y2, color):
-        self.colorize_horizontal_interval(y1, y2, x1, color)
-        self.colorize_horizontal_interval(y1, y2, x2, color)
-        self.colorize_vertical_interval(y1, x1, x2, color)
-        self.colorize_vertical_interval(y2, x1, x2, color)
+        self.colorize_vertical_interval(x1, y1, y2, color)
+        self.colorize_vertical_interval(x2, y1, x2, color)
+        self.colorize_horizontal_interval(x1, x2, y1, color)
+        self.colorize_horizontal_interval(x1, x2, y2, color)
 
     def colorize_region(self):
         pass
