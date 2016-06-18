@@ -16,9 +16,9 @@ class Matrix(object):
             for col_index, col in enumerate(row):
                 self.as_list[row_index][col_index] = self.DEFAULT_VALUE
 
-    def colorize_pixel(self, row, col, color):
-        col, row = int(col) - 1, int(row) - 1
-        self.as_list[col][row] = color
+    def colorize_pixel(self, x, y, color):
+        self.y, self.x = int(x) - 1, int(y) - 1
+        self.as_list[self.x][self.y] = color
 
     def colorize_vertical_interval(self, x, y1, y2, color):
         for y in range(int(y1), int(y2) + 1):
@@ -36,7 +36,7 @@ class Matrix(object):
         self.colorize_horizontal_interval(x1, x2, y1, color)
         self.colorize_horizontal_interval(x1, x2, y2, color)
 
-    def colorize_region(self):
+    def colorize_region(self, x, y, color):
         pass
 
     @property
@@ -85,6 +85,12 @@ class Matrix(object):
                 'args_min': 4,
                 'args_max': 5,
                 'error_message': 'Digite pelo menos quatro números'
+            },
+            'F': {
+                'method': self.colorize_region,
+                'args_min': 2,
+                'args_max': 3,
+                'error_message': 'Digite pelo menos dois números'
             },
             'S': {
                 'method': self.save,
